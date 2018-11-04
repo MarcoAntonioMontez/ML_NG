@@ -11,6 +11,31 @@ m = length(y); % number of training examples
 J = 0;
 grad = zeros(size(theta));
 
+%Transform for loops into matrixes
+
+for i=1:m
+    z=X(i,:)*theta;
+    a=-y(i)*log(sigmoid(z));
+    b=-(1-y(i))*log(1-sigmoid(z));
+    iter_cost=a+b;
+    J=J + iter_cost;
+end
+J=J/m;
+
+% for j=1:length(theta)
+%     acum = 0;
+%     for i=1:m
+%        z=X(i,:)*theta;
+%        acum = acum + (sigmoid(z) - y(i))'*X(i,j);  
+%     end
+%     grad(j)=acum/m;
+% end
+
+for j=1:length(theta)
+    acum = (sigmoid(X*theta) - y)'*X(:,j);
+    grad(j)=acum/m;
+end
+
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost of a particular choice of theta.
 %               You should set J to the cost.
