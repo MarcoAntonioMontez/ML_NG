@@ -74,8 +74,17 @@ end
     J=(1/m)*J;
 
 %Implement regularized term here
-
-
+    Theta1_square = Theta1.^2;
+    Theta2_square = Theta2.^2;
+    
+    Theta1_square(:,1)=0;
+    Theta2_square(:,1)=0;
+    
+    a=sum(Theta1_square(:));
+    b=sum(Theta2_square(:));
+    
+    reg = (lambda/(2*m))*(a + b);
+    J = J + reg;
 %
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
@@ -92,6 +101,13 @@ end
 %               over the training examples if you are implementing it for the 
 %               first time.
 %
+for t = 1:m
+    
+end
+
+
+
+
 % Part 3: Implement regularization with the cost function and gradients.
 %
 %         Hint: You can implement this around the code for
