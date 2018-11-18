@@ -100,8 +100,9 @@ end
 %               first time.
 %
 %number of layers
-delta1=zeros(hidden_layer_size,input_layer_size+1);
-delta2=zeros(num_labels,hidden_layer_size+1);
+L = 3;
+delta1=zeros(hidden_layer_size,input_layer_size);
+delta2=zeros(num_labels,hidden_layer_size);
 for i = 1:m   
     z2=X(i,:)*Theta1';
     a2=sigmoid(z2);
@@ -111,21 +112,28 @@ for i = 1:m
 
     h=sigmoid(z3);
     
-    yi_vec = zeros(num_labels,1);
+    yi_vec = zeros(10,1);
     yi_vec(y(i,1),1) = 1;
     
     %delta 3   
-    error3 = h(:) - yi_vec(:);
+    error3 = h' - yi_vec;
     
     %delta 2
     a = error3'*Theta2(:,2:end);
     error2 = a.*sigmoidGradient(z2);
-
+    
+    size(error2)
+    size(X(i,:))
     
     delta1 = delta1 + error2'*X(i,:);
     delta2 = delta2 + error3*a2;
+    pause
+    %Theta1_grad()
 end
-        
+
+
+
+
 % Part 3: Implement regularization with the cost function and gradients.
 %
 %         Hint: You can implement this around the code for
@@ -134,15 +142,7 @@ end
 %               and Theta2_grad from Part 2.
 %
 
-    a1=delta1;
-    b1=[zeros(hidden_layer_size,1) Theta1(:,2:end)];
-    
-    Theta1_grad=(1/m)*(a1 + lambda*b1);
-    
-    a2=delta2;
-    b2=[zeros(num_labels,1) Theta2(:,2:end)];
-    
-    Theta2_grad=(1/m)*(a2 + lambda*b2);
+
 
 
 
